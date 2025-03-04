@@ -14,6 +14,7 @@ public class CinemaShow {
 	private LocalDate movieDate;
 	private static final int EARLYBIRD_DAY_COUNT = 7;
 	private static final double PLACEPRICE = 25;
+	private Boolean isCinemaShowGifted = false;
 
 	/**
 	 * Returns a MovieTicket if there are still tickets available, otherwise returns
@@ -22,7 +23,12 @@ public class CinemaShow {
 	 * @param customer The customer reserving the ticket
 	 * @return MovieTicket | null
 	 */
-	public MovieTicket reserveTicket(Customer customer) {
+	public MovieTicket reserveTicket(Customer customer, Boolean isCinemaShowGifted) {
+		if (isCinemaShowGifted) {
+			System.out.println("here i am");
+			this.isCinemaShowGifted = true;
+		}
+
 		// Make sure there are tickets available
 		if (this.nrOfAvailablePlaces > 0) {
 			// Create a new MovieTicket
@@ -44,6 +50,12 @@ public class CinemaShow {
 	 * @return MovieTicket | null
 	 */
 	private MovieTicket determinTicketKind(Customer customer) {
+
+		if (this.isCinemaShowGifted) {
+			System.out.println("Gifted");
+			return new GiftMovieTicket(this, customer, 1, 1);
+		}
+
 		// If the current date is EARLYBIRD_DAY_COUNT days before the show, an early
 		// bird ticket is applicable
 		if (this.isEarlyBird()) {
@@ -54,11 +66,6 @@ public class CinemaShow {
 		if (customer.isMovieBuff()) {
 			System.out.println(("MovieBuff"));
 			return new MovieBuffTicket(this, customer, 1, 1);
-		}
-
-		if (this.isLucky()) {
-			System.out.println("Gifted");
-			return new GiftMovieTicket(this, customer, 1, 1);
 		}
 
 		// Otherwise a standard ticket is applicable
@@ -77,11 +84,6 @@ public class CinemaShow {
 		LocalDate earlyBirdDate = LocalDate.now().plusDays(EARLYBIRD_DAY_COUNT);
 
 		return earlyBirdDate.isBefore(this.movieDate);
-	}
-
-	private boolean isLucky() {
-		Random rd = new Random();
-		return rd.nextBoolean();
 	}
 
 	/**

@@ -3,7 +3,7 @@ package domain;
 // Pas de code aan door een ander soort kaartje te introduceren dat je afleid van de gegeven interface.
 public class GiftMovieTicket extends MovieTicket {
 
-    private final double DISCOUNT = 50;
+    private final double DISCOUNT = 100;
     private final double MAX_DISCOUNT = 100;
 
     public GiftMovieTicket(CinemaShow show, Customer customer, int rowNr, int seatNr) {
