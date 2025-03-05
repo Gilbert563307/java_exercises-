@@ -1,4 +1,4 @@
-package nl.hu.demojesery;
+package nl.hu.demojersey2;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
